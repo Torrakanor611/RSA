@@ -1,4 +1,5 @@
 vanetza/*
-!vanetza/Dockerfile
+!vanetza/docker-compose.yml
 
 **/venv
+**/__pycache__
