@@ -1,0 +1,110 @@
+[
+    {
+        "ip": "192.168.98.40"
+    },
+    {
+    "accEngaged": true,
+    "acceleration": 0,
+    "altitude": 800001,
+    "altitudeConf": 15,
+    "brakePedal": true,
+    "collisionWarning": true,
+    "cruiseControl": true,
+    "curvature": 1023,
+    "driveDirection": "FORWARD",
+    "emergencyBrake": true,
+    "gasPedal": false,
+    "heading": 3601,
+    "headingConf": 127,
+    "latitude": 70000000,
+    "length": 100,
+    "longitude": -70000000,
+    "semiMajorConf": 4095,
+    "semiMajorOrient": 3601,
+    "semiMinorConf": 4095,
+    "specialVehicle": {
+        "publicTransportContainer": {
+            "embarkationStatus": false
+        }
+    },
+    "speed": 16383,
+    "speedConf": 127,
+    "speedLimiter": true,
+    "stationID": 1,
+    "stationType": 15,
+    "width": 30,
+    "yawRate": 0
+    },
+    {
+        "2.0":{
+            "latitude": 70000001,
+            "longitude": -70000001
+        },
+        "4.5": {
+            "latitude": 70000002,
+            "longitude": -70000001
+        },
+        "7.0": {
+            "latitude": 70000003,
+            "longitude": -70000003
+        },
+        "7.5": {
+            "latitude": 70000004,
+            "longitude": -70000004
+        },
+        "8.0": {
+            "latitude": 70000005,
+            "longitude": -70000005
+        },
+        "8.5": {
+            "latitude": 70000006,
+            "longitude": -70000006
+        },
+        "9.0": {
+            "latitude": 70000007,
+            "longitude": -70000007
+        },
+        "9.5": {
+            "latitude": 70000008,
+            "longitude": -70000008
+        }
+    },
+    {
+        "management": {
+            "actionID": {
+                "originatingStationID": 1798587532,
+                "sequenceNumber": 0
+            },
+            "detectionTime": 1626453837.658,
+            "referenceTime": 1626453837.658,
+            "eventPosition": {
+                "latitude": 40.637799251415686,
+                "longitude": -8.652353364491056,
+                "positionConfidenceEllipse": {
+                    "semiMajorConfidence": 0,
+                    "semiMinorConfidence": 0,
+                    "semiMajorOrientation": 0
+                },
+                "altitude": {
+                    "altitudeValue": 0,
+                    "altitudeConfidence": 1
+                }
+            },
+            "validityDuration": 0,
+            "stationType": 0
+        },
+        "situation": {
+            "informationQuality": 7,
+            "eventType": {
+                "causeCode": 14,
+                "subCauseCode": 14
+            }
+        }
+    },
+    {
+        "7.0":{
+        },
+        "12.0":{
+        }
+    }    
+]
