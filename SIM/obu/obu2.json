@@ -1,6 +1,6 @@
 [
     {
-        "ip": "192.168.98.10"
+        "ip": "192.168.98.20"
     },
     {
     "accEngaged": true,
@@ -16,9 +16,9 @@
     "gasPedal": false,
     "heading": 3601,
     "headingConf": 127,
-    "latitude": 400000000,
+    "latitude": 50000000,
     "length": 100,
-    "longitude": -80000000,
+    "longitude": -90000000,
     "semiMajorConf": 4095,
     "semiMajorOrient": 3601,
     "semiMinorConf": 4095,
@@ -37,12 +37,16 @@
     },
     {
         "2.0":{
-            "latitude": 400000001,
-            "longitude": -80000001
+            "latitude": 50000001,
+            "longitude": -90000001
         },
         "4.5": {
-            "latitude": 400000002,
-            "longitude": -80000002
+            "latitude": 50000002,
+            "longitude": -90000002
+        },
+        "7.0": {
+            "latitude": 50000003,
+            "longitude": -90000003
         }
     }
 ]
