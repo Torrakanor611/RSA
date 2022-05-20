@@ -16,9 +16,9 @@
     "gasPedal": false,
     "heading": 3601,
     "headingConf": 127,
-    "latitude": 50000000,
+    "latitude": 40.631781,
     "length": 100,
-    "longitude": -90000000,
+    "longitude": -8.658761,
     "semiMajorConf": 4095,
     "semiMajorOrient": 3601,
     "semiMinorConf": 4095,
@@ -36,17 +36,125 @@
     "yawRate": 0
     },
     {
-        "2.0":{
-            "latitude": 50000001,
-            "longitude": -90000001
+        "0.5": {
+            "latitude": 40.631783,
+            "longitude": -8.658763
+        },
+        "1.0": {
+            "latitude": 40.631785,
+            "longitude": -8.658765
+        },
+        "1.5": {
+            "latitude": 40.631788,
+            "longitude": -8.658768
+        },
+        "2.0": {
+            "latitude": 40.631791,
+            "longitude": -8.658791
+        },
+        "2.5": {
+            "latitude": 40.631794,
+            "longitude": -8.658794
+        },
+        "3.0": {
+            "latitude": 40.631797,
+            "longitude": -8.658797
+        },
+        "3.5": {
+            "latitude": 40.631800,
+            "longitude": -8.658800
+        },
+        "4.0": {
+            "latitude": 40.631803,
+            "longitude": -8.658803
         },
         "4.5": {
-            "latitude": 50000002,
-            "longitude": -90000002
+            "latitude": 40.631806,
+            "longitude": -8.658806
+        },
+        "5.0": {
+            "latitude": 40.631809,
+            "longitude": -8.658809
+        },
+        "5.5": {
+            "latitude": 40.631812,
+            "longitude": -8.658812
+        },
+        "6.0": {
+            "latitude": 40.631815,
+            "longitude": -8.658815
+        },
+        "6.5": {
+            "latitude": 40.631818,
+            "longitude": -8.658818
         },
         "7.0": {
-            "latitude": 50000003,
-            "longitude": -90000003
+            "latitude": 40.631821,
+            "longitude": -8.658821
+        },
+        "7.5": {
+            "latitude": 40.631824,
+            "longitude": -8.658824
+        },
+        "8.0": {
+            "latitude": 40.631827,
+            "longitude": -8.658827
+        },
+        "8.5": {
+            "latitude": 40.631830,
+            "longitude": -8.658830
+        },
+        "9.0": {
+            "latitude": 40.631833,
+            "longitude": -8.658833
+        },
+        "9.5": {
+            "latitude": 40.631836,
+            "longitude": -8.658836
+        },
+        "10.0": {
+            "latitude": 40.631839,
+            "longitude": -8.658839
+        },
+        "10.5": {
+            "latitude": 40.631842,
+            "longitude": -8.658842
+        },
+        "11.0": {
+            "latitude": 40.631845,
+            "longitude": -8.658845
+        },
+        "11.5": {
+            "latitude": 40.631848,
+            "longitude": -8.658848
+        },
+        "12.0": {
+            "latitude": 40.631851,
+            "longitude": -8.658851
+        },
+        "12.5": {
+            "latitude": 40.631854,
+            "longitude": -8.658854
+        },
+        "13.0": {
+            "latitude": 40.631857,
+            "longitude": -8.658857
+        },
+        "13.5": {
+            "latitude": 40.631860,
+            "longitude": -8.658860
+        },
+        "14.0": {
+            "latitude": 40.631863,
+            "longitude": -8.658863
+        },
+        "14.5": {
+            "latitude": 40.631866,
+            "longitude": -8.658866
+        },
+        "15.0": {
+            "latitude": 40.631869,
+            "longitude": -8.658869
         }
     }
 ]
