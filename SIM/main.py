@@ -5,6 +5,21 @@ from queue import Queue
 import json
 import time
 import os
+import numpy as np
+import cv2
+import os
+from dotenv import load_dotenv
+from influxdb_client import InfluxDBClient, Point
+from influxdb_client.client.write_api import ASYNCHRONOUS
+from threading import current_thread
+
+# take environment variables from .env
+load_dotenv()
+
+# InfluxDB config
+BUCKET = os.getenv('INFLUXDB_BUCKET')
+influx_cli = InfluxDBClient(url=os.getenv('INFLUXDB_URL'), token=os.getenv('INFLUXDB_TOKEN'), org=os.getenv('INFLUXDB_ORG'))
+write_api = influx_cli.write_api()
 
 def update_cam(cam, update):
     for key in update.keys():
@@ -16,45 +31,76 @@ def update_cam(cam, update):
     return cam
 
 def on_message(client, userdata, message):
-    print('------>obu5 received message on topic ',str(message.topic))
-    # print('obu5 received message:',str(message.payload.decode("utf-8")))
-    # print('\n\n')
-    pass
+    #print(message)
+    msg_payload = json.loads(str(message.payload.decode("utf-8")))
+    # if topic is 'vanetza/out/cam'
+    if message.topic == 'vanetza/out/cam':
+        # payload to send
+        data = Point('cam').field('lat', msg_payload['latitude']).field('lng', msg_payload['longitude'])
+        # send to influxDB
+        write_api.write(bucket=BUCKET, record=data)
 
+def on_connect(client, userdata, flags, rc):
+    thread = current_thread()
+    if rc==0:
+        print(f'thread {thread.name} connected OK, returned code={rc}')
+    else:
+        print(f' thread {thread.name} Bad connection, returned code={rc}')
+ 
 def launch_obu(data):
     client = mqtt.Client(client_id=f'_{data[0]}')
     client.connect(data[0]['ip'], 1883, 60)
+    client.on_connect = on_connect
+    time.sleep(1)
+    cam = data[1]
     if data[0]['ip'] == '192.168.98.50':
         client.on_message = on_message
-    cam = data[1]
     client.publish('vanetza/in/cam', json.dumps(cam))
     client.subscribe('vanetza/out/denm')
     client.subscribe('vanetza/out/cam')
     count = 0.5
 
     while True:
-    ## update cam
+        ## update cam
         if str(count) in data[2].keys():
             cam = update_cam(cam, data[2][str(count)])
         client.publish('vanetza/in/cam', json.dumps(cam))
-
 
         if len(data) == 5:
             if str(count) in data[4].keys():
                 client.publish('vanetza/in/denm', json.dumps(data[3]))
 
         count += 0.5
-        # time.sleep(0.5)
         client.loop(0.5) #check for messages
 
     time.sleep(2) # wait
     client.disconnect()
+
+def video_stream(capture):
+    # Check if camera opened successfully
+    if (capture.isOpened() == False):
+        print("Error opening video stream or file")
+        exit(1)
+
+    while(capture.isOpened()):
+        ret, frame = capture.read()
+        if ret == True:
+            cv2.imshow('Video', frame)
+            # Press 'q' to exit
+            if cv2.waitKey(25) & 0xFF == ord('q'):
+                break
+        else:
+            break
+
+    capture.release()
+    cv2.destroyAllWindows()
 
 def main():
     files = os.listdir('obu')
     files = [f.split('.')[0] for f in files]
 
     threads = [Thread(target=launch_obu, name=f'_{obu}', args=(json.load(open(f'obu/{obu}.json')),  )) for obu in files]
+    # threads.append( Thread(target=video_stream, name=f'video_stream', args=(cv2.VideoCapture('video/vid1.mp4'), ) ))
 
     ## start the threads
     print(f'threads started!\n')

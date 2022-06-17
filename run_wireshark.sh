@@ -1,2 +1,2 @@
-cd /home/abreu/wireshark/build/run
+cd /home/pedro/wireshark/build/run
 sudo ./wireshark

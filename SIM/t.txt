@@ -8,3 +8,5 @@ diagrama de blocos
 
 
 página web visuaização
+
+acidentes, carros parados na via, zonas de construção
