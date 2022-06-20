@@ -30,11 +30,12 @@ import UserProfile from "views/UserProfile/UserProfile.js";
 import TableList from "views/TableList/TableList.js";
 import Typography from "views/Typography/Typography.js";
 import Icons from "views/Icons/Icons.js";
-import Maps from "views/Maps/Maps.js";
+import Maps from "views/Maps/Maps_Component";
 import NotificationsPage from "views/Notifications/Notifications.js";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
 // core components/views for RTL layout
 import RTLPage from "views/RTLPage/RTLPage.js";
+import Maps_Page from "views/Maps/Maps";
 
 const dashboardRoutes = [
   // {
@@ -82,7 +83,7 @@ const dashboardRoutes = [
     name: "Maps",
     rtlName: "خرائط",
     icon: LocationOn,
-    component: Maps,
+    component: Maps_Page,
     layout: "/admin",
   },
   // {

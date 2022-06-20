@@ -1,44 +1,49 @@
-/*!
-=========================================================
-* Argon Dashboard React - v1.1.0
-=========================================================
-* Product Page: https://www.creative-tim.com/product/argon-dashboard-react
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/argon-dashboard-react/blob/master/LICENSE.md)
-* Coded by Creative Tim
-=========================================================
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
 import React, {useState,useEffect} from "react";
 // react plugin used to create google maps
 // reactstrap components
 import {Card, Container, Row} from "reactstrap";
 // core components
 import Maps from "./Maps_Component.js";
-import mqtt from 'mqtt/dist/mqtt';
 
-const call_time = 200;
+const call_time = 500;
+
 
 const Maps_Page = () => {
 
   const [markers, setMarkers] = useState([]);
-  const [leader, setLeader] = useState([]);
 
-  var options = {
-    keepalive: 30,
-  };
-  
-  var client  = mqtt.connect('192.168.98.50', options);
+  useEffect(() => {
+    const interval = setInterval(
+      () => {
+        getLocations().then((value) => {
+          setMarkers(value)
+        });
+      }, call_time);
 
-  var note;
-  client.on('message', function (topic, message) {
-    note = message.toString();
-    // Updates React state with message 
-    setMarkers(note);
-    // console.log(note);
-    // client.end(); // ?
-  });
+      return () => clearInterval(interval)
+    },[]
+  )
 
+  const getLocations = async () => {
+    let response = await fetch(
+      `http://localhost:5000/api/getLocations`);
+      console.log(response)
+    let result = await response.json();
+    let all_locations = [];
+    console.log("Results: ")
+    console.log(result)
+    for (var obu in result) {
+      all_locations.push(
+        {
+          lat: result[obu]["lat"],
+          lng: result[obu]["lng"],
+          stationId : result[obu]["stationID"]
+        }
+      )
+    }
+    // console.log(all_locations)
+    return all_locations;
+  }
 
   return(
       <>

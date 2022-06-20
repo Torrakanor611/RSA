@@ -35,8 +35,11 @@ def on_message(client, userdata, message):
     msg_payload = json.loads(str(message.payload.decode("utf-8")))
     # if topic is 'vanetza/out/cam'
     if message.topic == 'vanetza/out/cam':
+        lat = msg_payload['latitude']
+        lng = msg_payload['longitude']
         # payload to send
-        data = Point('cam').field('lat', msg_payload['latitude']).field('lng', msg_payload['longitude'])
+        data = Point('cam').tag('stationID', msg_payload['stationID']).field('lat&lng', f'{lat}&{lng}')
+        print(f'{lat}&{lng}\n')
         # send to influxDB
         write_api.write(bucket=BUCKET, record=data)
 
@@ -46,11 +49,19 @@ def on_connect(client, userdata, flags, rc):
         print(f'thread {thread.name} connected OK, returned code={rc}')
     else:
         print(f' thread {thread.name} Bad connection, returned code={rc}')
+
+def on_disconnect(client, userdata, rc):
+    thread = current_thread()
+    if rc==0:
+        print(f'thread {thread.name} disconnected, returned code={rc}')
+    else:
+        print(f' thread {thread.name} disconnected, returned code={rc}')
  
 def launch_obu(data):
     client = mqtt.Client(client_id=f'_{data[0]}')
     client.connect(data[0]['ip'], 1883, 60)
     client.on_connect = on_connect
+    client.on_disconnect = on_disconnect
     time.sleep(1)
     cam = data[1]
     if data[0]['ip'] == '192.168.98.50':
