@@ -31,7 +31,6 @@ def update_cam(cam, update):
     return cam
 
 def on_message(client, userdata, message):
-    #print(message)
     msg_payload = json.loads(str(message.payload.decode("utf-8")))
     # if topic is 'vanetza/out/cam'
     if message.topic == 'vanetza/out/cam':
@@ -39,7 +38,8 @@ def on_message(client, userdata, message):
         lng = msg_payload['longitude']
         # payload to send
         data = Point('cam').tag('stationID', msg_payload['stationID']).field('lat&lng', f'{lat}&{lng}')
-        print(f'{lat}&{lng}\n')
+        id = msg_payload['stationID']
+        print(f'StationId {id} {lat}, {lng}\n')
         # send to influxDB
         write_api.write(bucket=BUCKET, record=data)
 
@@ -59,17 +59,20 @@ def on_disconnect(client, userdata, rc):
  
 def launch_obu(data):
     client = mqtt.Client(client_id=f'_{data[0]}')
-    client.connect(data[0]['ip'], 1883, 60)
+    client.connect(data[0]['ip'], 1883, 30)
     client.on_connect = on_connect
     client.on_disconnect = on_disconnect
     time.sleep(1)
     cam = data[1]
     if data[0]['ip'] == '192.168.98.50':
+        print(True)
         client.on_message = on_message
     client.publish('vanetza/in/cam', json.dumps(cam))
     client.subscribe('vanetza/out/denm')
     client.subscribe('vanetza/out/cam')
-    count = 0.5
+    count = 0.0
+
+    client.loop_start()
 
     while True:
         ## update cam
@@ -82,8 +85,9 @@ def launch_obu(data):
                 client.publish('vanetza/in/denm', json.dumps(data[3]))
 
         count += 0.5
-        client.loop(0.5) #check for messages
+        time.sleep(0.5)
 
+    client.loop_stop()
     time.sleep(2) # wait
     client.disconnect()
 
@@ -102,7 +106,6 @@ def video_stream(capture):
                 break
         else:
             break
-
     capture.release()
     cv2.destroyAllWindows()
 

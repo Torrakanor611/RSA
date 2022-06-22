@@ -26,13 +26,15 @@ def index():
 @app.route('/api/getLocations')
 async def get_locations() -> dict:
     query = f'''from(bucket:"{os.getenv('INFLUXDB_BUCKET')}")\
-    |> range(start: -30s)\
+    |> range(start: -1s)\
     |> filter(fn:(r) => r._measurement == "cam")\
     |> filter(fn:(r) => r.stationID == "1" or r.stationID == "2" or r.stationID == "3" or r.stationID == "4")
     |> sort(columns: ["_time"])
     |> limit(n: 4)
     '''
     result = query_api.query(org=os.getenv('INFLUXDB_ORG'), query=query)
+
+    # print(result)
 
     last_entrys = [None] * 4
     for table in result:
