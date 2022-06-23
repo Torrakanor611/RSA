@@ -250,8 +250,8 @@
             "detectionTime": 1626453837.658,
             "referenceTime": 1626453837.658,
             "eventPosition": {
-                "latitude": 40.637799251415686,
-                "longitude": -8.652353364491056,
+                "latitude": 25.202346780426137,
+                "longitude": 55.27626758768434,
                 "positionConfidenceEllipse": {
                     "semiMajorConfidence": 0,
                     "semiMinorConfidence": 0,
@@ -268,8 +268,8 @@
         "situation": {
             "informationQuality": 7,
             "eventType": {
-                "causeCode": 14,
-                "subCauseCode": 14
+                "causeCode": 94,
+                "subCauseCode": 91
             }
         }
     },
