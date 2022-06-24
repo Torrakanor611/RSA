@@ -4,6 +4,7 @@ import React, {useState,useEffect} from "react";
 import {Card, Container, Row} from "reactstrap";
 // core components
 import Maps from "./Maps_Component.js";
+import Alert from 'react-bootstrap/Alert'
 
 const call_time = 500;
 
@@ -11,29 +12,41 @@ const call_time = 500;
 const Maps_Page = () => {
 
   const [markers, setMarkers] = useState([]);
+  const [msg, setMsg] = useState('');
+  const [show, setShow] = useState(true);
 
   useEffect(() => {
     const interval = setInterval(
       () => {
-        getLocations().then((value) => {
-          setMarkers(value)
+        getDataCam().then((value) => {
+          setMarkers(value);
         });
+        
+        getDataDenm().then((value) => {
+          setShow(true)
+          if (value == ''){
+            setShow(true);
+          } else {
+            setMsg(value)
+            setShow(true)
+          }
+        })
       }, call_time);
 
       return () => clearInterval(interval)
     },[]
   )
 
-  const getLocations = async () => {
+  const getDataCam = async () => {
     let response = await fetch(
-      `http://localhost:5000/api/getLocations`);
-      console.log(response)
+      `http://localhost:5000/api/datacam`);
+      // console.log(response)
     let result = await response.json();
-    let all_locations = [];
-    console.log("Results: ")
-    console.log(result)
+    let data = [];
+    // console.log("Results: ")
+    // console.log(result)
     for (var obu in result) {
-      all_locations.push(
+      data.push(
         {
           lat: result[obu]["lat"],
           lng: result[obu]["lng"],
@@ -41,14 +54,25 @@ const Maps_Page = () => {
         }
       )
     }
-    // console.log(all_locations)
-    return all_locations;
+    return data;
+  }
+
+  const getDataDenm = async () => {
+    let response = await fetch(
+      `http://localhost:5000/api/datadenm`);
+      // console.log(response)
+    let result = await response.json();
+    console.log("DENM: ");
+    console.log(result);
+    if (result == {}){
+      return ''
+    }
+    return result['msg'];
   }
 
   return(
       <>
         {/* Page content */}
-        <Container className="mt--7" fluid>
           <Row>
             <div className="col">
               <Card className="shadow border-0">
@@ -62,7 +86,9 @@ const Maps_Page = () => {
               </Card>
             </div>
           </Row>
-        </Container>
+          <Alert variant="danger">
+          <Alert.Heading>{msg}</Alert.Heading>
+          </Alert>
       </>
     );
   }

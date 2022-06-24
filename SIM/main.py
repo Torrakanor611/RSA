@@ -38,10 +38,20 @@ def on_message(client, userdata, message):
         lng = msg_payload['longitude']
         # payload to send
         data = Point('cam').tag('stationID', msg_payload['stationID']).field('lat&lng', f'{lat}&{lng}')
-        id = msg_payload['stationID']
-        print(f'StationId {id} {lat}, {lng}\n')
         # send to influxDB
         write_api.write(bucket=BUCKET, record=data)
+
+    # if topic is 'vanetza/out/denm'
+    if message.topic == 'vanetza/out/denm':
+        lat = msg_payload['fields']['denm']['management']['eventPosition']['latitude']
+        lng = msg_payload['fields']['denm']['management']['eventPosition']['longitude']
+        cause = msg_payload['fields']['denm']['situation']['eventType']['causeCode']
+        subcause = msg_payload['fields']['denm']['situation']['eventType']['subCauseCode']
+        # payload to send
+        data = Point('denm').field('cause', f'{cause}').field('subcause', f'{subcause}')
+        # send to influxDB
+        write_api.write(bucket=BUCKET, record=data)
+        print(f'sended to influx, {cause}, {subcause}!')
 
 def on_connect(client, userdata, flags, rc):
     thread = current_thread()
@@ -114,7 +124,7 @@ def main():
     files = [f.split('.')[0] for f in files]
 
     threads = [Thread(target=launch_obu, name=f'_{obu}', args=(json.load(open(f'obu/{obu}.json')),  )) for obu in files]
-    # threads.append( Thread(target=video_stream, name=f'video_stream', args=(cv2.VideoCapture('video/vid1.mp4'), ) ))
+    threads.append( Thread(target=video_stream, name=f'video_stream', args=(cv2.VideoCapture('video/vid1.mp4'), ) ))
 
     ## start the threads
     print(f'threads started!\n')
