@@ -43,8 +43,8 @@ def on_message(client, userdata, message):
 
     # if topic is 'vanetza/out/denm'
     if message.topic == 'vanetza/out/denm':
-        lat = msg_payload['fields']['denm']['management']['eventPosition']['latitude']
-        lng = msg_payload['fields']['denm']['management']['eventPosition']['longitude']
+        # lat = msg_payload['fields']['denm']['management']['eventPosition']['latitude']
+        # lng = msg_payload['fields']['denm']['management']['eventPosition']['longitude']
         cause = msg_payload['fields']['denm']['situation']['eventType']['causeCode']
         subcause = msg_payload['fields']['denm']['situation']['eventType']['subCauseCode']
         # payload to send
@@ -75,7 +75,6 @@ def launch_obu(data):
     time.sleep(1)
     cam = data[1]
     if data[0]['ip'] == '192.168.98.50':
-        print(True)
         client.on_message = on_message
     client.publish('vanetza/in/cam', json.dumps(cam))
     client.subscribe('vanetza/out/denm')
